@@ -13,7 +13,7 @@ import PhotoPicker from "../common/PhotoPicker";
 function MessageBar() {
   const [{userInfo, currentChatUser , socket}, dispatch ] = useStateProvider()
   const[message , setMessage] = useState("");
-  const[showEmojiPicker , setshowEmojiPicker] = useState(false);
+  const[showEmojiPicker , setemojipicker] = useState(false);
   const EmojiPickerRef = useRef(null);
   const[grabPhoto , setgrabPhoto] = useState(false);
 
@@ -73,13 +73,13 @@ function MessageBar() {
 //Handling the outside click
 useEffect(()=>{
 const handleoutsideClick = (event) =>{
-     if(event.target.id !== "emoji-opner"){
+     if(event.target.id !== "emoji-opener"){
       if(
         EmojiPickerRef.current && 
        !EmojiPickerRef.current.contains(event.target)
         ){
         
-          setshowEmojiPicker(false)
+          setemojipicker(false)
        }
 }
 };
@@ -92,7 +92,7 @@ return () =>{document.removeEventListener('click' , handleoutsideClick)};
 
 const handleEmojiModel = () => {
   console.log(!showEmojiPicker)
-  setshowEmojiPicker(!showEmojiPicker); // there some issue not know why
+  setemojipicker(!showEmojiPicker); // there some issue not know why
 };
 const handleemojiClick = (emoji) => {
  setMessage((previousmsg) =>(previousmsg += emoji.emoji))
@@ -132,7 +132,7 @@ const handleemojiClick = (emoji) => {
       <BsEmojiSmile 
       className="text-panel-header-icon cursor-pointer text-xl"
       title="Emoji"
-      id="emoji-open"
+      id="emoji-opener"
       onClick={handleEmojiModel}
       />
        {  
