@@ -13,7 +13,7 @@ import PhotoPicker from "../common/PhotoPicker";
 function MessageBar() {
   const [{userInfo, currentChatUser , socket}, dispatch ] = useStateProvider()
   const[message , setMessage] = useState("");
-  const[showEmojiPicker , setshowEmojiPicker] =  useState(false)
+  const[showEmojiPicker , setshowEmojiPicker] = useState(false);
   const EmojiPickerRef = useRef(null);
   const[grabPhoto , setgrabPhoto] = useState(false);
 
@@ -91,7 +91,8 @@ return () =>{document.removeEventListener('click' , handleoutsideClick)};
 // handling Emoji section
 
 const handleEmojiModel = () => {
-  setshowEmojiPicker(!showEmojiPicker);
+  console.log(!showEmojiPicker)
+  setshowEmojiPicker(!showEmojiPicker); // there some issue not know why
 };
 const handleemojiClick = (emoji) => {
  setMessage((previousmsg) =>(previousmsg += emoji.emoji))
@@ -133,12 +134,15 @@ const handleemojiClick = (emoji) => {
       title="Emoji"
       id="emoji-open"
       onClick={handleEmojiModel}
-      />{
-        showEmojiPicker && <div className="absolute bottom-24 left-16 z-40"
-        ref={EmojiPickerRef}
-        >
-          <EmojiPicker onEmojiClick={handleemojiClick} theme = "dark"/>
+      />
+       {  
+       showEmojiPicker && (<div className="absolute bottom-24 left-16 z-40"
+           ref={EmojiPickerRef}
+          >
+        <EmojiPicker onEmojiClick={handleemojiClick} theme = "dark"/>
            </div>
+           
+        )
       }
       <ImAttachment 
       className="text-panel-header-icon cursor-pointer text-xl"
@@ -150,7 +154,7 @@ const handleemojiClick = (emoji) => {
     <div className="w-full rounded-lg h-10 flex items-center">
       <input type="text" placeholder="Type your message" className="bg-input-background text-sm focus:outline-none text-white h-10 rounded-lg px-5 py-4 w-full" 
       value={message}
-   onChange={(e)=>{setMessage(e.target.value)}}
+      onChange={(e)=>{setMessage(e.target.value)}}
 /> </div>
 
 
