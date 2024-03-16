@@ -97,6 +97,34 @@ if(req.file) {
     }
     return res.status(400).send("to and from rquired")
 }
-return res.status(400).send("file is required")
+return res.status(400).send("Image is required")
 
 })
+
+export const addAudioMessage = asyncHandler(async (req , res ,next) =>{
+    if(req.file) {
+        const date  = Date.now();
+        let fileName = "uploads/recordings/" + date + req.file.originalname;
+        renameSync(req.file.path , fileName);
+        console.log(fileName)
+        const prisma = getPrismaInstance();
+        const {from,to } = req.query;
+        const getUser = onlineUsers.get(to);
+    
+        if(from && to){
+            const message =  await prisma.Messages.create({
+                data : {
+                    message : fileName,
+                    sender : {connect : {id : parseInt(from)}},
+                    reciever : {connect : {id:parseInt(to)}},
+                    messageStatus : getUser ? "delivered" : "sent",
+                    type : "Audio",
+                },
+            });
+            return res.status(201).json({message})
+        }
+        return res.status(400).send("to and from rquired")
+    }
+    return res.status(400).send("Audio is required")
+    
+    })

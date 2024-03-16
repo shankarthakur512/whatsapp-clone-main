@@ -9,6 +9,8 @@ import axios from "axios";
 import { reducerCases } from "@/context/constants";
 import EmojiPicker from "emoji-picker-react";
 import PhotoPicker from "../common/PhotoPicker";
+import dynamic from "next/dynamic";
+const  CaptureAudio = dynamic ( () => import("../common/CaptureAudio"));
 
 function MessageBar() {
   const [{userInfo, currentChatUser , socket}, dispatch ] = useStateProvider()
@@ -16,6 +18,7 @@ function MessageBar() {
   const[showEmojiPicker , setemojipicker] = useState(false);
   const EmojiPickerRef = useRef(null);
   const[grabPhoto , setgrabPhoto] = useState(false);
+  const[ShowcaptureAudio , setShowcaptureAudio] = useState(false)
 
   //useEffect for image
   useEffect(()=>{
@@ -34,7 +37,7 @@ function MessageBar() {
   //potopicker change
   const photoPickerChange = async(e)=>{
     try {
-       const file = e.target.files[0];
+      const file = e.target.files[0];
       const formData = new FormData();
       formData.append("image" , file);
       const response = await axios.post(ADD_IMAGE_MESSAGE_ROUTE,formData,{
@@ -127,6 +130,8 @@ const handleemojiClick = (emoji) => {
  }
   return (
   <div className="bg-panel-header-background h-20 px-4 flex items-center gap-6 relative">
+      {!ShowcaptureAudio && (
+ 
     <>
     <div className="flex gap-6">
       <BsEmojiSmile 
@@ -161,19 +166,21 @@ const handleemojiClick = (emoji) => {
 
     <div className="flex w-10 items-center justify-center">
      <button>
-      <MdSend 
+    {message.length ? (  <MdSend 
       className="text-panel-header-icon cursor-pointer text-xl"
       title="send message"
       onClick = {sendMessage}
-      />
-     {/* <FaMicrophone 
+      />) :
+     <FaMicrophone 
       className="text-panel-header-icon cursor-pointer text-xl"
       title="send voice message"
-      /> */}
+      onClick={ () =>{setShowcaptureAudio(true)} }
+      /> }
      </button>
     </div>
     
-    </>
+    </> 
+    )}
     {
       grabPhoto && (
         
@@ -182,6 +189,9 @@ const handleemojiClick = (emoji) => {
         />
 
       )
+    }
+    {
+      ShowcaptureAudio && <CaptureAudio hide ={setShowcaptureAudio}/>
     }
 
   </div>
