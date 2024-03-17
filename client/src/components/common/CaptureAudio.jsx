@@ -7,7 +7,7 @@ import axios from "axios";
 import { reducerCases } from "@/context/constants";
 import { ADD_AUDIO_MESSAGE_ROUTE } from "@/utils/ApiRoutes";
 function CaptureAudio({hide}) {
-const[{userInfo , currentChatUser , socket }] = useStateProvider();
+const[{userInfo , currentChatUser , socket }, dispatch] = useStateProvider();
 
   const[isRecording , setisRecording]  = useState(false);
   const[recordedAudio , setRecordedAudio] = useState(null);
@@ -152,7 +152,7 @@ mediaRecorder.start();
 
  //
  const SendRecording = async () =>{
-  alert("ok")
+  
 
   try {
   const formData = new FormData();

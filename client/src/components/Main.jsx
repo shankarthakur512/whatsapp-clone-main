@@ -27,13 +27,11 @@ useEffect(()=>{
 // any change in state is handled here
 onAuthStateChanged(firebaseAuth,async (currentUser) =>{
 if(!currentUser) setRedirectTologin(true);
-console.log(currentUser.email);
 
 if(!userInfo && currentUser?.email){
 const {data} = await axios.post(CHECK_USER,{
 email : currentUser.email,
 })
-console.log(data)
 dispatch({
   type : reducerCases.SET_USER_INFO,
    userInfo : {

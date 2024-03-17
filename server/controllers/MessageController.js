@@ -106,7 +106,7 @@ export const addAudioMessage = asyncHandler(async (req , res ,next) =>{
         const date  = Date.now();
         let fileName = "uploads/recordings/" + date + req.file.originalname;
         renameSync(req.file.path , fileName);
-        console.log(fileName)
+        
         const prisma = getPrismaInstance();
         const {from,to } = req.query;
         const getUser = onlineUsers.get(to);

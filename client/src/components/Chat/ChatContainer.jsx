@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { MdOutlineIntegrationInstructions } from "react-icons/md";
 import MessageStatus from "../common/MessageStatus";
 import ImageMessage from "./ImageMessage";
+import VoiceMessage from "./VoiceMessage";
 
 function ChatContainer() {
   const [{messages , currentChatUser , userInfo}] =  useStateProvider();
@@ -34,6 +35,11 @@ return (
 {
   message.type === "image" && (
     <ImageMessage  message={message}/>
+  )
+}
+{
+  message.type === "Audio" && (
+    <VoiceMessage  message={message} />
   )
 }
  </div>))}
