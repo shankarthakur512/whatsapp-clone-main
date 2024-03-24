@@ -10,7 +10,9 @@ import { reducerCases } from "@/context/constants";
 import EmojiPicker from "emoji-picker-react";
 import PhotoPicker from "../common/PhotoPicker";
 import dynamic from "next/dynamic";
-const  CaptureAudio = dynamic ( () => import("../common/CaptureAudio"));
+const  CaptureAudio = dynamic ( () => import("../common/CaptureAudio"),{
+  ssr: false,
+});
 
 function MessageBar() {
   const [{userInfo, currentChatUser , socket}, dispatch ] = useStateProvider()

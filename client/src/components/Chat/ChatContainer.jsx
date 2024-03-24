@@ -1,15 +1,17 @@
 import { useStateProvider } from "@/context/StateContext";
 import { calculateTime } from "@/utils/CalculateTime";
-import React, { useState } from "react";
-import { MdOutlineIntegrationInstructions } from "react-icons/md";
+import React from "react";
 import MessageStatus from "../common/MessageStatus";
 import ImageMessage from "./ImageMessage";
-import VoiceMessage from "./VoiceMessage";
+import dynamic from "next/dynamic";
+const  VoiceMessage = dynamic ( () => import("./VoiceMessage"),{
+  ssr: false,
+});
 
 function ChatContainer() {
   const [{messages , currentChatUser , userInfo}] =  useStateProvider();
-   console.log(messages.senderId === currentChatUser.id ? "true" :"false");
-   console.log(currentChatUser.id);
+  console.log(messages.senderId === currentChatUser.id ? "true" :"false");
+ console.log(currentChatUser.id);
    console.log(userInfo.id)
   
 return (

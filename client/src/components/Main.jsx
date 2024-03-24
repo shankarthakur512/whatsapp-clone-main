@@ -10,11 +10,12 @@ import { useStateProvider } from "@/context/StateContext.jsx";
 import { reducerCases } from "@/context/constants.js";
 import Chat from "./Chat/Chat.jsx";
 import { io } from "socket.io-client"
+import SearchMessages from "./Chat/SearchMessages.jsx";
 
 function Main() {
   const router = useRouter();
   const[RedirectTologin , setRedirectTologin] = useState(false)
-  const[{userInfo , currentChatUser} , dispatch] =useStateProvider();
+  const[{userInfo , currentChatUser,messageSearch} , dispatch] =useStateProvider();
   const socket = useRef();
   const [socketEvent , setSocketEvent] = useState(false)
 useEffect(()=>{
@@ -26,6 +27,7 @@ useEffect(()=>{
 
 // any change in state is handled here
 onAuthStateChanged(firebaseAuth,async (currentUser) =>{
+  console.log(RedirectTologin)
 if(!currentUser) setRedirectTologin(true);
 
 if(!userInfo && currentUser?.email){
@@ -83,7 +85,12 @@ if(socket.current && !socketEvent){
 <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full overflow-hidden">
   <ChatList />
  
- {currentChatUser ? <Chat /> : <Empty />}
+ {currentChatUser ? (
+  <div className={messageSearch ? "grid grid-cols-2" : "grid-cols-2"} >
+ <Chat /> 
+ {messageSearch && <SearchMessages />}
+ </div>
+ ): <Empty />}
 </div>
   </>);
 }
