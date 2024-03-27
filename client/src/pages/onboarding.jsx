@@ -49,7 +49,7 @@ useEffect(() =>{
      }
      }
    } catch (error) {
-    console.log(userInfo)
+   // console.log(userInfo)
      throw (error)
    }
   }

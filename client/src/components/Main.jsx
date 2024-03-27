@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import ChatList from "./Chatlist/ChatList.jsx";
 import Empty from "./Empty.jsx";
-import { useRouter } from "next/router.js";
+import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "@/utils/FirebaseConfig.js";
 import axios from "axios";
@@ -11,6 +11,8 @@ import { reducerCases } from "@/context/constants.js";
 import Chat from "./Chat/Chat.jsx";
 import { io } from "socket.io-client"
 import SearchMessages from "./Chat/SearchMessages.jsx";
+import { redirects } from "../../next.config.js";
+
 
 function Main() {
   const router = useRouter();
@@ -19,16 +21,15 @@ function Main() {
   const socket = useRef();
   const [socketEvent , setSocketEvent] = useState(false)
 useEffect(()=>{
- if(RedirectTologin){
-    router.push("/login");
-  }
-},[RedirectTologin,setRedirectTologin]) 
+ if(RedirectTologin) router.push("/login");
+
+},[RedirectTologin, setRedirectTologin]) 
 
 
 // any change in state is handled here
 onAuthStateChanged(firebaseAuth,async (currentUser) =>{
-  console.log(RedirectTologin)
-if(!currentUser) setRedirectTologin(true);
+  
+if(!currentUser) router.push("/login");;
 
 if(!userInfo && currentUser?.email){
 const {data} = await axios.post(CHECK_USER,{
@@ -69,7 +70,7 @@ if(socket.current && !socketEvent){
  useEffect(() =>{
   const getmessages = async () =>{
     const {data : {messages}} = await axios.get(`${GET_MESSAGE}/${userInfo.id}/${currentChatUser.id}`)
-    console.log(messages)
+  
      dispatch({type : reducerCases.SET_MESSAGES , messages})
   }
 

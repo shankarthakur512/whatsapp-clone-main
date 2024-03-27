@@ -2,14 +2,34 @@ import React, { useState } from "react";
 import Avatar from "../common/Avatar";
 import { useStateProvider } from "@/context/StateContext";
 import { reducerCases } from "@/context/constants";
+import MessageStatus from "../common/MessageStatus";
+import { FaCamera, FaMicrophone } from "react-icons/fa";
+import { calculateTime } from "@/utils/CalculateTime";
 
 function ChatLIstItem({data , isContactPage = false}) {
   
   const[{userInfo , currentChatUser} , dispatch] = useStateProvider()
+
   const handleContactClick = () =>{
+  if(!isContactPage ){
+    console.log(data)
+ dispatch({type: reducerCases.CHANGE_CURRENT_CHAT_USER , user : {
+  name : data.name,
+  about : data.about,
+  profilePicture : data.profilePicture,
+  email : data.email,
+  id : userInfo.id === data.senderId ? data.recieverId : data.senderId
+ }})
+
+
+  }else{
+  
     dispatch({type : reducerCases.CHANGE_CURRENT_CHAT_USER , user  : {...data}})
     dispatch({type : reducerCases.SET_ALL_CONTACTS_PAGE})
+  
   }
+  }
+
   return (
     
    <div className={`flex cursor-pointer items-center hover:bg-background-default-hover`}
@@ -25,11 +45,47 @@ function ChatLIstItem({data , isContactPage = false}) {
     <div>
       <span className="text-white">{data?.name}</span>
     </div>
+    {
+      !isContactPage && (
+        <div>
+          <span
+          className={`${
+            !data.unreadMessages > 0 ? "text-secondary" : "text-icon-green"
+          } text-sm`}>
+            {calculateTime(data.createdAt)}
+          </span>
+          
+           </div>
+      )
+    }
   </div>
   <div className="flex border-b border-conversation-border pb-2 pt-1 pr-2">
     <div className="flex justify-between w-full">
       <span className="text-secondary line-clamp-1 text-sm">
-        {data?.about || "\u00A4" }
+        {isContactPage ? ( data?.about || "\u00A4" ) :
+        (<div className="flex items-center gap-1 max-w-[200px]
+        sm:max-w-[300px] md:max-w-[300px] lg:max-w-[200px] xl:max-w-[300px]">
+          {
+            data.senderId === userInfo.id && (<MessageStatus MessageStatus={data.messageStatus}/>)
+          }
+          {
+            data.type === "text" && (
+              <span className="truncate" >{data.message}</span>
+            )
+          }
+          {
+            data.type === "image" && (<span className="flex gap-1 items-center">
+              <FaCamera  className="text-panel-header-icon"/> 
+              image
+            </span>)
+          }
+          {
+            data.type === "Audio" && (<span className="flex gap-1 items-center">
+              <FaMicrophone  className="text-panel-header-icon"/> 
+              Audio
+            </span>)
+          }
+        </div>)}
       </span>
     </div>
   </div>

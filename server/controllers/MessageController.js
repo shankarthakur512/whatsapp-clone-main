@@ -131,7 +131,7 @@ export const addAudioMessage = asyncHandler(async (req , res ,next) =>{
 export const getIntialContactswithMessage = async (req,res,next) =>{
     try{
         const userId = parseInt(req.params.from);
-        const prisma = getPrismaInstance()
+        const prisma = getPrismaInstance();
         const user  = await prisma.User.findUnique({
             where : {id : userId},
             include : {
@@ -156,33 +156,36 @@ export const getIntialContactswithMessage = async (req,res,next) =>{
        },
         });
     const messages = [...user.sentMessages , ...user.recievedMessages];
-    messages.sort((a,b) => b.createdAt.getTime() > a.createdAt.getTime());
+    messages.sort((a,b) => b.createdAt.getTime() - a.createdAt.getTime());
+   console.log([messages])
     const users = new Map();
     const messageStatusChange = [];
     messages.forEach((msg) => {
         const isSender = msg.senderId === userId;
-        const calculatedId = isSender ? messageStatusChange.recievierId : msg.senderId;
-        if(msg.messageStatus === "sent"){
+        const calculatedId = isSender ? msg.recieverId : msg.senderId;
+        if(msg.messageStatus === "sent" && !isSender){
             messageStatusChange.push(msg.id);
         } 
-
+        const {
+            id,
+            type,
+            message,
+            messageStatus,
+            createdAt,
+            senderId,
+            recieverId
+        } = msg;
         if(!users.get(calculatedId)){
-            const {
-                id,
-                type,
-                message,
-                messageStatus,
-                createdAt,
-                senderId,
-                recievierId
-            } = msg;
+         //   console.log(msg.reciever);
+           
             let user = {
                 messageId : id,
                 type,
                 message,
                 messageStatus,
                 createdAt,
-                recievierId
+                senderId,
+                recieverId
             };
             if(isSender) {
                 user = {
@@ -191,6 +194,7 @@ export const getIntialContactswithMessage = async (req,res,next) =>{
                     totalUnreadMessages : 0,
                 };
             }else { 
+                
                 user = {
                     ...user,
                     ...msg.sender,
@@ -220,7 +224,7 @@ export const getIntialContactswithMessage = async (req,res,next) =>{
     })
 }
 return res.status(200).json({
-    users : Array.form(users.values()),
+    users : Array.from(users.values()),
     onlineUsers : Array.from(onlineUsers.keys())
 })
 

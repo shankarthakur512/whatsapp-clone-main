@@ -10,9 +10,9 @@ const  VoiceMessage = dynamic ( () => import("./VoiceMessage"),{
 
 function ChatContainer() {
   const [{messages , currentChatUser , userInfo}] =  useStateProvider();
-  console.log(messages.senderId === currentChatUser.id ? "true" :"false");
- console.log(currentChatUser.id);
-   console.log(userInfo.id)
+//   console.log(messages.senderId === currentChatUser.id ? "true" :"false");
+//  console.log(currentChatUser.id);
+//    console.log(userInfo.id)
   
 return (
 <div className="h-[80vh] w-full relative flex-grow overflow-auto custom-scrollbar">

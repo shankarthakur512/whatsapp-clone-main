@@ -2,23 +2,33 @@ import { useStateProvider } from "@/context/StateContext";
 import { GET_INTIAL_CONTACTS } from "@/utils/ApiRoutes";
 import React, { useEffect } from "react";
 import axios from "axios";
+import { reducerCases } from "@/context/constants";
+import ChatLIstItem from "./ChatLIstItem";
 
 function List() {
-  const [{userInfo}] = useStateProvider();
+  const [{userInfo, userContacts , onlineUsers }, dispatch] = useStateProvider();
  useEffect(()=>{
-  const getcontscts =  async () =>{
+  const getcontacts =  async () =>{
     try {
       const {
        data : {users , onlineUsers}
       } = await axios(`${GET_INTIAL_CONTACTS}/${userInfo.id}`)
+      dispatch({type : reducerCases.SET_USER_CONTACTS , 
+      userContacts : users})
+      dispatch({type : reducerCases.SET_ONLINE_USER , onlineUsers})
+      console.log(users);
     } catch (error) {
       console.log(error);
     }
-  }
+   }
+    getcontacts();
  },[userInfo])
 
   return (
   <div className="bg-search-input-container-background flex-auto overflow-auto max-h-full custom-scrollbar">
+    {userContacts.map((contact)=>(
+      <ChatLIstItem data={contact} key={contact.id} />
+    ))}
 
   </div>
     );

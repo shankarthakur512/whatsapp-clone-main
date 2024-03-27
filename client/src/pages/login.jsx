@@ -21,7 +21,7 @@ function login() {
     try {
       if (email) {
         const {data} = await axios.post(CHECK_USER,{email});
-        console.log({data});
+       // console.log({data});
         if(!data.success){
 
           dispatch({

@@ -8,6 +8,8 @@ currentChatUser : undefined,
 messages : [],
 socket : undefined,
 messageSearch : false,
+userContacts : [],
+onlineUser : []
 };
 
 const reducer = (state ,action) =>{
@@ -51,6 +53,18 @@ const reducer = (state ,action) =>{
             return {
                  ...state,
                  messageSearch : !state.messageSearch
+            }
+        }
+        case reducerCases.SET_USER_CONTACTS : {
+            return {
+                ...state ,
+                userContacts : action.userContacts
+            }
+        }
+        case reducerCases.SET_ONLINE_USER: {
+            return {
+                ...state ,
+                onlineUser : action.onlineUser
             }
         }
         default:
