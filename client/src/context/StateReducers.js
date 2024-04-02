@@ -9,7 +9,14 @@ messages : [],
 socket : undefined,
 messageSearch : false,
 userContacts : [],
-onlineUser : []
+onlineUser : [],
+filteredContacts : [],
+voiceCall : undefined,
+videoCall : undefined,
+
+IncomingVideoCall : undefined,
+IncomingVoiceCall : undefined
+
 };
 
 const reducer = (state ,action) =>{
@@ -67,6 +74,49 @@ const reducer = (state ,action) =>{
                 onlineUser : action.onlineUser
             }
         }
+        case reducerCases.SET_FILTERED_CONTACTS :{
+
+      const filteredContacts =   state.userContacts.filter((contacts) => contacts.name.toLowerCase().includes(action.contactSearched.toLowerCase()))
+      
+            return {
+                ...state,
+                contactSearched : action.contactSearched,
+                filteredContacts 
+     }  
+     }
+     case reducerCases.SET_VIDEO_CALL: {
+       return{
+        ...state,
+        videoCall : action.videoCall
+       }
+     }
+     case reducerCases.SET_VOICE_CALL: {
+        return{
+         ...state,
+         voiceCall : action.voiceCall
+        }
+      }
+      case reducerCases.SET_INCOMING_VIDEO_CALL: {
+        return{
+         ...state,
+         IncomingVideoCall : action.IncomingVideoCall
+        }
+      }
+      case reducerCases.SET_INCOMING_VOICE_CALL: {
+        return{
+         ...state,
+         IncomingVoiceCall : action.IncomingVoiceCall
+        }
+      }
+      case reducerCases.SET_END_CALL :{
+        return{
+            ...state,
+            voiceCall : undefined,
+            videoCall : undefined,
+            IncomingVideoCall : undefined,
+            IncomingVoiceCall : undefined,
+        }
+      }
         default:
             return state;
     }

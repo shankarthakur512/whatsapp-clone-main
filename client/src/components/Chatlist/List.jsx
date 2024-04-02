@@ -6,7 +6,7 @@ import { reducerCases } from "@/context/constants";
 import ChatLIstItem from "./ChatLIstItem";
 
 function List() {
-  const [{userInfo, userContacts , onlineUsers }, dispatch] = useStateProvider();
+  const [{userInfo, userContacts , onlineUsers , filteredContacts}, dispatch] = useStateProvider();
  useEffect(()=>{
   const getcontacts =  async () =>{
     try {
@@ -16,7 +16,7 @@ function List() {
       dispatch({type : reducerCases.SET_USER_CONTACTS , 
       userContacts : users})
       dispatch({type : reducerCases.SET_ONLINE_USER , onlineUsers})
-      console.log(users);
+      
     } catch (error) {
       console.log(error);
     }
@@ -26,10 +26,14 @@ function List() {
 
   return (
   <div className="bg-search-input-container-background flex-auto overflow-auto max-h-full custom-scrollbar">
-    {userContacts.map((contact)=>(
+    {/*console.log(filteredContacts) */}
+    {filteredContacts && filteredContacts.length>0 ?
+(filteredContacts.map((contact)=>(
+  <ChatLIstItem data={contact} key={contact.id} />
+))): (userContacts.map((contact)=>(
       <ChatLIstItem data={contact} key={contact.id} />
-    ))}
-
+    )))
+    }
   </div>
     );
 }

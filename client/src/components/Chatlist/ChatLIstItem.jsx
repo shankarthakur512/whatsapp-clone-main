@@ -50,7 +50,7 @@ function ChatLIstItem({data , isContactPage = false}) {
         <div>
           <span
           className={`${
-            !data.unreadMessages > 0 ? "text-secondary" : "text-icon-green"
+            !data.totalUnreadMessages > 0 ? "text-secondary" : "text-icon-green"
           } text-sm`}>
             {calculateTime(data.createdAt)}
           </span>
@@ -69,7 +69,7 @@ function ChatLIstItem({data , isContactPage = false}) {
             data.senderId === userInfo.id && (<MessageStatus MessageStatus={data.messageStatus}/>)
           }
           {
-            data.type === "text" && (
+             data.type === "text" && (
               <span className="truncate" >{data.message}</span>
             )
           }
@@ -87,6 +87,7 @@ function ChatLIstItem({data , isContactPage = false}) {
           }
         </div>)}
       </span>
+      {data.totalUnreadMessages > 0 && <span className="bg-icon-green px-[5px] rounded-full text-sm">{data.totalUnreadMessages} </span>}
     </div>
   </div>
  </div>

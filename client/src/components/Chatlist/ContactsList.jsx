@@ -8,19 +8,41 @@ import ChatLIstItem from "./ChatLIstItem";
 
 function ContactsList() {
   const [{},dispatch] = useStateProvider();
-  const[allcontacts , setAllcontacts] = useState([])
+  const[allcontacts , setAllcontacts] = useState([]);
+  const [SearchTerm , setSearchTerm] = useState("");
+  const [SearchedContact ,setSearchedContact] = useState([])
+ 
+ useEffect(()=>{
+   if(SearchTerm){
+      const filterData = {};
+      Object.keys(allcontacts).forEach((key) => {
+        filterData[key] = allcontacts[key].filter((obj)=> obj.name.toLowerCase().includes(SearchTerm.toLowerCase()));
+      }
+    );
+    setSearchedContact(filterData);
+   }else{
+    setSearchedContact(allcontacts)
+   }
+
+ }, [SearchTerm])
+ 
+ 
   useEffect(() =>{
   
     const getContacts = async () =>{
   try{
       const {data : {users}} = await axios.get(GET_ALL_CONTACTS);
+     
      setAllcontacts(users);
+     setSearchedContact(users);
+     
   } catch (error) {
     console.log(error);
   } 
 }
   getContacts();
   },[])
+
 
   return (
   <div className="h-full flex flex-col">
@@ -47,6 +69,9 @@ className="text-panel-header-icon cursor-pointer text-l"/>
    type="text" 
    placeholder="Search contacts" 
    className="bg-transparent text-sm focus:outline-none text-white w-full"
+  value={SearchTerm}
+  onChange={(e) => (setSearchTerm(e.target.value))}
+  
   />
 </div>
 </div>
@@ -54,10 +79,14 @@ className="text-panel-header-icon cursor-pointer text-l"/>
 
       </div>
 
+   
+      
 
 {
- Object.entries(allcontacts).map(([initialLetter , userList]  ) => {
+
+ Object.entries(SearchedContact).map(([initialLetter , userList]  ) => {
   return (
+    userList.length > 0 && (
     <div key={Date.now() + initialLetter}> 
     <div className="text-teal-light pl-10 py-5">{initialLetter}</div>
     {
@@ -73,8 +102,8 @@ className="text-panel-header-icon cursor-pointer text-l"/>
       })
     }
     </div>
-  )
- })
+     ) )
+ }) 
 }
 
    

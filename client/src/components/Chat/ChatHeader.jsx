@@ -6,9 +6,35 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useStateProvider } from "@/context/StateContext";
 import { reducerCases } from "@/context/constants";
-
+import { useRouter } from "next/router";
 function ChatHeader() {
-  const[{currentChatUser},dispatch] = useStateProvider()
+  const[{currentChatUser},dispatch] = useStateProvider();
+const router = useRouter();
+
+const handleVoicecall = () =>{
+  dispatch({
+    type : reducerCases.SET_VOICE_CALL ,
+voiceCall : {
+  ...currentChatUser,
+  type: "voice",
+  callType : "out-going",
+  roomId : Date.now(),
+}
+    
+  })
+  }
+  const handlevideocall = () =>{
+  dispatch({
+    type : reducerCases.SET_VIDEO_CALL ,
+videoCall : {
+  ...currentChatUser,
+  type: "video",
+  callType : "out-going",
+  roomId : Date.now(),
+}
+    
+  })
+  }
   return (
     <div className="h-16 px-4 py-3 flex justify-between items-center bg-panel-header-background z-10">
     <div className="flex items-center justify-center gap-6">
@@ -21,8 +47,8 @@ function ChatHeader() {
       </div>
     </div>
     <div className="flex gap-6">
-      <MdCall  className="text-panel-header-icon cursor-pointer text-l" />
-      <IoVideocam className="text-panel-header-icon cursor-pointer text-l" />
+      <MdCall  className="text-panel-header-icon cursor-pointer text-l" onClick={handleVoicecall} />
+      <IoVideocam className="text-panel-header-icon cursor-pointer text-l" onClick={handlevideocall}/>
       <BiSearchAlt2  className="text-panel-header-icon cursor-pointer text-l" 
       
       onClick={()=>{dispatch({

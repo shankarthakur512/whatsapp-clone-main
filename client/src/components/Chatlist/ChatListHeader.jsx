@@ -8,9 +8,9 @@ import { reducerCases } from "@/context/constants";
 function ChatListHeader() {
 const router = useRouter();
   const[{userInfo} , dispatch] = useStateProvider();
- /* useEffect(()=>{
-  if(!userInfo ) router.push("/");
-  },[]) */
+  // useEffect(()=>{
+  // if(!userInfo) router.push("/login");
+  // },[]) 
   const handleAllcontacts = () =>{
     dispatch({type : reducerCases.SET_ALL_CONTACTS_PAGE} )
   }
@@ -18,7 +18,7 @@ const router = useRouter();
     <div className="h-16 px-4 py-3 flex justify-between items-center">
       <div className="cursor-pointer">
      
-      <Avatar type="sm" image={userInfo.photoImage} />
+      <Avatar type="sm" image={userInfo?.photoImage} />
       </div>
     <div className="flex gap-6">
       <BsFillChatLeftTextFill className="text-panel-header-icon cursor-pointer text-xl" 

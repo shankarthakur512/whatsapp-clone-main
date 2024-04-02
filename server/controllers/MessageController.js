@@ -157,7 +157,7 @@ export const getIntialContactswithMessage = async (req,res,next) =>{
         });
     const messages = [...user.sentMessages , ...user.recievedMessages];
     messages.sort((a,b) => b.createdAt.getTime() - a.createdAt.getTime());
-   console.log([messages])
+ //  console.log([messages])
     const users = new Map();
     const messageStatusChange = [];
     messages.forEach((msg) => {
@@ -207,7 +207,7 @@ export const getIntialContactswithMessage = async (req,res,next) =>{
             const user = users.get(calculatedId);
             users.set(calculatedId , {
                ...user,
-               totalUnreadMessages : user.totalUnreadMessages +1, 
+               totalUnreadMessages : user.totalUnreadMessages + 1, 
             });
         }
     });
