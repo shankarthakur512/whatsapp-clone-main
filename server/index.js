@@ -9,7 +9,7 @@ dotenv.config(
 )
 
 app.get('/' , (req,res , next)=>{
-    res.send("hello");
+    res.status(200).send("hello");
     next();
 })
 
