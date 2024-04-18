@@ -8,7 +8,10 @@ dotenv.config(
     }
 )
 
-
+app.get('/' , (req,res , next)=>{
+    res.send("hello");
+    next();
+})
 
 const server = app.listen(process.env.PORT , ()=>{
     console.log(`server is running at http://localhost:${process.env.PORT}`)
