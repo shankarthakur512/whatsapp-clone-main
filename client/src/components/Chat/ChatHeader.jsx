@@ -6,10 +6,11 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useStateProvider } from "@/context/StateContext";
 import { reducerCases } from "@/context/constants";
-import { useRouter } from "next/router";
 function ChatHeader() {
-  const[{currentChatUser},dispatch] = useStateProvider();
-const router = useRouter();
+  const[{currentChatUser , socket , userInfo},dispatch] = useStateProvider();
+
+
+
 
 const handleVoicecall = () =>{
   dispatch({
@@ -24,13 +25,18 @@ voiceCall : {
   })
   }
   const handlevideocall = () =>{
+    const roomId = Date.now();
+//   socket.current.emit("join_user" , {
+//       from : userInfo.id,
+//      roomId : roomId,
+//  })
   dispatch({
     type : reducerCases.SET_VIDEO_CALL ,
 videoCall : {
   ...currentChatUser,
   type: "video",
   callType : "out-going",
-  roomId : Date.now(),
+  roomId 
 }
     
   })

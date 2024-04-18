@@ -1,25 +1,37 @@
-import React ,{useEffect} from "react";
+import React ,{useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useStateProvider } from "@/context/StateContext";
+
 const Container = dynamic(() => import("./Container.jsx") , {ssr : false})
 
 function VideoCall() {
-  const[{socket , videoCall , userInfo}] =useStateProvider();
- 
-  useEffect(()=>{
-    console.log(videoCall)
-    if(videoCall.callType === "out-going"){
-      socket.current.emit("out-going-video-call" ,{
+  const[{socket , videoCall , userInfo ,},dispatch] = useStateProvider();
+// const myoffer = useOffer();
+  
+useEffect(()=>{
+ if(videoCall.callType === "out-going" ){
+  // console.log({myoffer})
+ socket.current.emit("out-going-video-call" ,{
         to : videoCall.id,
         from : {
           id : userInfo.id,
           profilePicture : userInfo.photoImage,
-          name : userInfo.name
-        },
-    callType : videoCall.callType,
-    roomId : videoCall.roomId
-      })
+          name : userInfo.name,
+         },
+    type : videoCall.type,
+    roomId : videoCall.roomId,
+    
+    })
     } }, [])
+    // useEffect(()=>{
+    //   socket.current.on("user-joined",({from})=>{
+    //     socket.current.emit("joining_offer" , {from , myOffer : myoffer , to : videoCall.id })
+    //   })
+     
+    // },[])
+
+
+ 
   
   return <Container data ={videoCall}/>;
 }

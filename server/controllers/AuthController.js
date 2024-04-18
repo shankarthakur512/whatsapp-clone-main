@@ -2,7 +2,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import getPrismaInstance from "../utils/PrismaClient.js";
-
+import { generateToken04 } from "../utils/TokenGenerator.js";
 export const checkUser =asyncHandler (async (req , res,next) =>{
    const {email} = req.body
     if(!email){
@@ -55,3 +55,31 @@ users.forEach((user)=> {
 return res.status(200).send({users : usersGroupedByInitialLetter})
 
 })
+
+export const generateToken = (req ,res, next)=>{
+try {
+    
+    const  appId = parseInt(process.env.ZEGO_APP_ID);
+    const serverSecret = process.env.ZEGO_SERVER_ID;
+    const userId = req.params.userId;
+    const effectiveTime = 3600;
+    const payload = ""
+    if(appId && serverSecret && userId){
+    const Token = generateToken04(
+        appId,
+        userId,
+        serverSecret,
+        effectiveTime,
+        payload
+    );
+    res.status(200).json({Token});
+}else{
+    res.status(400).send("appId , serverSecret or userId required")
+
+}
+} catch (error) {
+    next(error);
+}
+
+
+}

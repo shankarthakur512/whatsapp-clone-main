@@ -16,7 +16,7 @@ useEffect(()=>{
         profilePicture : userInfo.photoImage,
         name : userInfo.name
       },
-  callType : voiceCall.callType,
+  type : voiceCall.type,
   roomId : voiceCall.roomId
     })
   }

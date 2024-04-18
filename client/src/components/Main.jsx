@@ -14,7 +14,7 @@ import SearchMessages from "./Chat/SearchMessages.jsx";
 import VoiceCall from "./Call/VoiceCall.jsx";
 import VideoCall from "./Call/VideoCall.jsx";
 import IncomingCall from "./common/IncomingCall.jsx";
-import IncomingVideocall from "./common/IncomingVideoCall.jsx";
+import IncomingVideocall from "./common/IncomingVideocall.jsx";
 
 
 function Main() {
@@ -58,10 +58,29 @@ useEffect(()=>{
     dispatch({type : reducerCases.SET_SOCKET , socket})
   }
 },[userInfo])
+// useEffect(()=>{
+//   if(userInfo){
+//     const peer = new RTCPeerConnection({
+//       iceServers : [
+//         {
+//          urls : [
+//           "stun:stun.l.google.com:19302",
+//           "stun:global.stun.twilio.com:3478"
+//          ]
+//         }
+//       ]
+//     })
+//   dispatch({
+//     type : reducerCases.SET_PEER ,
+//     peer
+//   })
+    
+//   }
+// },[userInfo])
 useEffect(()=>{
 if(socket.current && !socketEvent){
   socket.current.on("msg-recieve" , (data) =>{
-    console.log(data);
+    // console.log(data);
     dispatch({
       type : reducerCases.ADD_MESSAGE,
       newMessage : {
@@ -69,23 +88,23 @@ if(socket.current && !socketEvent){
       }
     })
   })
-  socket.current.on("incoming_voice_call" , ({from , roomId, callType})=>{
+  socket.current.on("incoming_voice_call" , ({from , roomId, type})=>{
     dispatch({
       type : reducerCases.SET_INCOMING_VOICE_CALL , 
       IncomingVoiceCall : {
-        ...from , roomId , callType
+        ...from , roomId , type
       }
     })
   })
  
-  socket.current.on("incoming_video_call", ({from , roomId, callType})=>{
-    console.log(from)
-    dispatch({
+  socket.current.on("incoming_video_call", ({from , roomId, type  })=>{
+   dispatch({
       type : reducerCases.SET_INCOMING_VIDEO_CALL , 
       IncomingVideoCall : {
-        ...from , roomId , callType
+        ...from , roomId , type
       }
     })
+  })
    socket.current.on("voice-call-rejected" ,()=>{
     dispatch({
       type : reducerCases.SET_END_CALL
@@ -97,10 +116,14 @@ if(socket.current && !socketEvent){
     })
  })
 
- 
-  })
 
-  setSocketEvent(true)
+ //my code
+// socket.current.on("user_joined" ,()=>{
+//   console.log("user" + from + "joined");
+// })
+
+
+setSocketEvent(true)
 }
 },[socket.current])
  useEffect(() =>{

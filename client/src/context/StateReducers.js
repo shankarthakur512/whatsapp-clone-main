@@ -13,9 +13,10 @@ onlineUser : [],
 filteredContacts : [],
 voiceCall : undefined,
 videoCall : undefined,
-
 IncomingVideoCall : undefined,
-IncomingVoiceCall : undefined
+IncomingVoiceCall : undefined,
+// peer : undefined,ß
+// offer : undefined,
 
 };
 
@@ -117,6 +118,20 @@ const reducer = (state ,action) =>{
             IncomingVoiceCall : undefined,
         }
       }
+    //   case reducerCases.SET_PEER : {
+    //     return {
+    //         ...state,
+    //         peer : action.peer
+    //     }
+    //   }
+    //   case reducerCases.CREATE_OFFER : {
+        
+    
+    //     return {
+    //         ...state,
+    //         offer : action.myOffer
+    //     }
+    //   }
         default:
             return state;
     }

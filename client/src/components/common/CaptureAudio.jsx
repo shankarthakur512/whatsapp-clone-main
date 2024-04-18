@@ -144,7 +144,7 @@ mediaRecorder.start();
       const audioFile = new File([audioBlob] , "recording.mp3");
 
     setRenderAudio(audioFile);
-    console.log(RenderAudio)
+   // console.log(RenderAudio)
     })
   }
 
@@ -166,7 +166,7 @@ mediaRecorder.start();
       to : currentChatUser.id,
     }
   });
-    console.log(response)
+   // console.log(response)
   if(response.status === 201){
     socket.current.emit("send-msg" , {
       to : currentChatUser ?.id,
@@ -180,7 +180,7 @@ mediaRecorder.start();
     },
     fromSelf : true,
     });
-    console.log("done")
+   // console.log("done")
   }
   
   

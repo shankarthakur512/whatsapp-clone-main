@@ -12,7 +12,7 @@ function ChatLIstItem({data , isContactPage = false}) {
 
   const handleContactClick = () =>{
   if(!isContactPage ){
-    console.log(data)
+    
  dispatch({type: reducerCases.CHANGE_CURRENT_CHAT_USER , user : {
   name : data.name,
   about : data.about,
@@ -37,7 +37,7 @@ function ChatLIstItem({data , isContactPage = false}) {
    
    >
    <div className="min-w-fit px-5 pt-3 pb-1">
-  <Avatar type="lg" image={data?.profilePicture}/>
+  <Avatar type= "lg" image={data?.profilePicture}/>
 
  </div>
  <div className="min-h-full flex flex-col justify-center mt-3 pr-2 w-full">

@@ -8,7 +8,7 @@ import { calculateTime } from "@/utils/CalculateTime.js";
 function ImageMessage({message}) {
   const[{currentChatUser , userInfo}] = useStateProvider();
   return (
-  <div className={`p-1 rounded-lg ${message.senderId === currentChatUser.id ? "bg-incoming-background" : "bg-outgoing-background"}`}>I
+  <div className={`p-1 rounded-lg ${message.senderId === currentChatUser.id ? "bg-incoming-background" : "bg-outgoing-background"}`}>
   <div className="relative">
     <Image src={`${HOST}/${message.message}`}
     className="rounded-lg"
