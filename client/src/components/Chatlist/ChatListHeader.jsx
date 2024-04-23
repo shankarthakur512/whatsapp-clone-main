@@ -11,6 +11,7 @@ const router = useRouter();
   // useEffect(()=>{
   // if(!userInfo) router.push("/login");
   // },[]) 
+  
   const handleAllcontacts = () =>{
     dispatch({type : reducerCases.SET_ALL_CONTACTS_PAGE} )
   }

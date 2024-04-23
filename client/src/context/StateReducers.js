@@ -15,7 +15,7 @@ voiceCall : undefined,
 videoCall : undefined,
 IncomingVideoCall : undefined,
 IncomingVoiceCall : undefined,
-// peer : undefined,ß
+peer : undefined,
 // offer : undefined,
 
 };
@@ -118,12 +118,12 @@ const reducer = (state ,action) =>{
             IncomingVoiceCall : undefined,
         }
       }
-    //   case reducerCases.SET_PEER : {
-    //     return {
-    //         ...state,
-    //         peer : action.peer
-    //     }
-    //   }
+      case reducerCases.SET_PEER : {
+        return {
+            ...state,
+            peer : action.peer
+        }
+      }
     //   case reducerCases.CREATE_OFFER : {
         
     
@@ -132,6 +132,13 @@ const reducer = (state ,action) =>{
     //         offer : action.myOffer
     //     }
     //   }
+
+    case reducerCases.SET_EXIT_CHAT :{
+        return{
+            ...state,
+            currentChatUser : undefined
+        }
+    }
         default:
             return state;
     }

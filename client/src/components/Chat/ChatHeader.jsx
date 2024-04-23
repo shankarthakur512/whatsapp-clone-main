@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState}from "react";
 import Avatar from "../common/Avatar";
 import {MdCall} from "react-icons/md";
 import { IoVideocam } from "react-icons/io5";
@@ -6,9 +6,33 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useStateProvider } from "@/context/StateContext";
 import { reducerCases } from "@/context/constants";
+import ContextMenu from "../common/ContextMenu";
 function ChatHeader() {
   const[{currentChatUser , socket , userInfo},dispatch] = useStateProvider();
+  const [isContextMenuVisible , setIsContextMenuVisible] = useState(false);
+  const[contextMenuCoordinates , setcontextMenuCoordinates] = useState({
+    x:0,
+    y:0
+  })
 
+  const showContextMenu =(e) =>{
+    e.preventDefault();
+    console.log(e)
+    console.log(isContextMenuVisible)
+    setcontextMenuCoordinates({x:e.pageX - 30 , y: e.pageY + 10});
+     setIsContextMenuVisible(true);
+    console.log(isContextMenuVisible)
+  }
+
+  //context
+  const contextMenuOptions=[
+    {
+    name: "EXIT", 
+    callback: async ()=>{
+      dispatch({type : reducerCases.SET_EXIT_CHAT})
+    }
+     } ,
+    ]
 
 
 
@@ -26,10 +50,10 @@ voiceCall : {
   }
   const handlevideocall = () =>{
     const roomId = Date.now();
-//   socket.current.emit("join_user" , {
-//       from : userInfo.id,
-//      roomId : roomId,
-//  })
+  socket.current.emit("join_user" , {
+      from : userInfo.id,
+     roomId : roomId,
+ })
   dispatch({
     type : reducerCases.SET_VIDEO_CALL ,
 videoCall : {
@@ -61,10 +85,24 @@ videoCall : {
         type : reducerCases.SET_MESSAGE_SEARCH
       })}}
       />
-      <BsThreeDotsVertical  className="text-panel-header-icon cursor-pointer text-l" />
+      <BsThreeDotsVertical  className="text-panel-header-icon cursor-pointer text-l" 
+      onClick={(e) =>{showContextMenu(e)}}
+      id="context-opener"
+      />
+    {
+      isContextMenuVisible && (<ContextMenu 
+      options={contextMenuOptions}
+      coordinates={contextMenuCoordinates}
+      contextMenu={isContextMenuVisible}
+      setContextMenu={setIsContextMenuVisible}
+      />
+      )
+  }
 
     </div>
+   
     </div>
+    
     );
 }
 

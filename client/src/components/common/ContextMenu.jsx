@@ -18,7 +18,7 @@ useEffect(()=>{
   const handleOutsideClick = (e) =>{
     if(e.target.id !== "context-opener" ){
       if(ContextMenuRef.current && !ContextMenuRef.current.contains(e.target)){
-        setContextMenu(false);
+         setContextMenu(false);
       }
     }
   };
@@ -33,7 +33,7 @@ useEffect(()=>{
     top : coordinates.y,
     left : coordinates.x
   }}
-  
+
   ref={ContextMenuRef}
   >
     <ul>

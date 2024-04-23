@@ -17,6 +17,8 @@ import IncomingCall from "./common/IncomingCall.jsx";
 import IncomingVideocall from "./common/IncomingVideocall.jsx";
 
 
+
+
 function Main() {
   const router = useRouter();
   const[RedirectTologin , setRedirectTologin] = useState(false)
@@ -38,7 +40,7 @@ if(!userInfo && currentUser?.email){
 const {data} = await axios.post(CHECK_USER,{
 email : currentUser.email,
 })
-
+console.log(data)
 dispatch({
   type : reducerCases.SET_USER_INFO,
    userInfo : {
@@ -77,6 +79,16 @@ useEffect(()=>{
     
 //   }
 // },[userInfo])
+useEffect(() => {
+	import("peerjs").then(({ default: Peer }) => {
+		// normal synchronous code
+		const peer = new Peer(`${userInfo?.id}`);
+		peer.on('open', id => {
+			console.log(id);
+      dispatch({type : reducerCases.SET_PEER , peer})
+		})
+	})
+}, [userInfo])
 useEffect(()=>{
 if(socket.current && !socketEvent){
   socket.current.on("msg-recieve" , (data) =>{

@@ -19,7 +19,7 @@ const server = app.listen(process.env.PORT , ()=>{
 
 const io = new Server(server , {
     cors : {
-        origin : "https://whatsapp-clone-main.vercel.app",
+        origin : "http://localhost:3000",
     },
 });
 global.onlineUsers = new Map();
@@ -92,18 +92,18 @@ socket.on("accept_call" , ({id}) =>{
 
 // my code
 
-// socket.on("join_user",async (data)=>{
-//     console.log("i get the request")
-//     const sendUserSocket = await onlineUsers.get(data.from);
-//     const {roomId , from } = data;
+socket.on("join_user",async (data)=>{
+    console.log("i get the request")
+    const sendUserSocket = await onlineUsers.get(data.from);
+    const {roomId , from } = data;
     
-//     if(sendUserSocket){
-//         socket.join(roomId);
-//         socket.emit("joined_room", {roomId});
-//         socket.broadcast.to(roomId).emit("user-joined" ,{from })
-//         console.log("user get joined :" ,roomId);
-//     }
-// })
+    if(sendUserSocket){
+        socket.join(roomId);
+        socket.emit("joined_room", {roomId});
+        socket.broadcast.to(roomId).emit("user-joined" ,{from })
+        console.log("user get joined :" ,roomId);
+    }
+})
 // socket.on("joining_offer" ,({myOffer ,from ,to}) =>{
 //     const sendUserSocket = onlineUsers.get(to);
 //     console.log(to)

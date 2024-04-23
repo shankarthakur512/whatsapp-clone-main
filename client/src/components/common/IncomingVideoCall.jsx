@@ -14,12 +14,13 @@ function IncomingVideocall() {
   //   })
   
   // })
-  console.log(IncomingVideoCall)
+  // console.log(IncomingVideoCall)
   const acceptCall = () =>{
    dispatch({type : reducerCases.SET_VIDEO_CALL , videoCall : {
     ...IncomingVideoCall ,
     callType : "in-coming"
    }})
+   socket.current.emit("join_user",{roomId : IncomingVideoCall.roomId , from : userInfo.id})
    socket.current.emit("accept_call" , {
   id : IncomingVideoCall.id
    })
