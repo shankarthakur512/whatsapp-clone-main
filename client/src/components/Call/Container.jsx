@@ -39,10 +39,11 @@ useEffect(()=>{
 },[data]);
 
 useEffect(()=>{
- if(data.callType == 'in-coming'){
+ if(data.callType === 'in-coming'){
 let getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+// console.log(peer);
 peer.on('call', function(call) {
-  getUserMedia({video: true, audio: true}, function(stream) {
+  getUserMedia({video: data.type === "video" ? true : false, audio: true}, function(stream) {
     LocalVideoRef.current.srcObject = stream;
     LocalVideoRef.current.play();
     call.answer(stream); // Answer the call with an A/V stream.
@@ -55,7 +56,7 @@ peer.on('call', function(call) {
   });
 });
  }
-},[])
+},[callAccepted])
 
 useEffect(() =>{
 // socket.current.on("user-joined",({from}) =>{
@@ -64,7 +65,7 @@ useEffect(() =>{
 // })
 if(data.callType === "out-going"){
   var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-getUserMedia({video: true, audio: true}, function(stream) {
+getUserMedia({video: data.type === "video" ? true : false, audio: true}, function(stream) {
   var call = peer.call(`${data.id}`, stream);
    LocalVideoRef.current.srcObject = stream;
    LocalVideoRef.current.play();

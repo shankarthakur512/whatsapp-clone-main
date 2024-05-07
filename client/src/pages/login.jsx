@@ -64,7 +64,7 @@ function login() {
     <div className="flex justify-center items-center bg-panel-header-background h-screen w-screen flex-col gap-6">
      <div className="flex items-center justify-center gap-2 text-white">
       <Image src="/whatsapp.gif" alt="whatsapp" height={280} width={280}></Image>
-      <span className="text-6xl">whatsApp</span>
+      <span className="text-6xl">WeChat</span>
       </div>
       <button
       className="flex items-center justify-center gap-6 bg-search-input-container-background p-3 shadow-sm rounded-lg"

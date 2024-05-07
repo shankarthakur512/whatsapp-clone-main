@@ -20,7 +20,7 @@ function IncomingVideocall() {
     ...IncomingVideoCall ,
     callType : "in-coming"
    }})
-   socket.current.emit("join_user",{roomId : IncomingVideoCall.roomId , from : userInfo.id})
+  //  socket.current.emit("join_user",{roomId : IncomingVideoCall.roomId , from : userInfo.id})
    socket.current.emit("accept_call" , {
   id : IncomingVideoCall.id
    })

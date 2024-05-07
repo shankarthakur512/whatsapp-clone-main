@@ -72,7 +72,7 @@ const reducer = (state ,action) =>{
         case reducerCases.SET_ONLINE_USER: {
             return {
                 ...state ,
-                onlineUser : action.onlineUser
+                onlineUser : action.onlineUsers
             }
         }
         case reducerCases.SET_FILTERED_CONTACTS :{

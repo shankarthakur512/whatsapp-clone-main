@@ -126,6 +126,9 @@ if(socket.current && !socketEvent){
     dispatch({
       type : reducerCases.SET_END_CALL
     })
+    socket.current.on('online-users' , ({onlineUsers}) =>{
+      dispatch({type:reducerCases.SET_ONLINE_USER , onlineUsers})
+    })
  })
 
 

@@ -8,7 +8,7 @@ import { useStateProvider } from "@/context/StateContext";
 import { reducerCases } from "@/context/constants";
 import ContextMenu from "../common/ContextMenu";
 function ChatHeader() {
-  const[{currentChatUser , socket , userInfo},dispatch] = useStateProvider();
+  const[{currentChatUser , socket , userInfo,onlineUser},dispatch] = useStateProvider();
   const [isContextMenuVisible , setIsContextMenuVisible] = useState(false);
   const[contextMenuCoordinates , setcontextMenuCoordinates] = useState({
     x:0,
@@ -72,7 +72,7 @@ videoCall : {
       <div className="flex flex-col">
         <span className="text-primary-strong">{currentChatUser?.name}</span>
         <span className="text-secondary text-sm">
-          online/offline
+          {onlineUser.includes(currentChatUser.id) ? "online" : "offline"}
         </span>
       </div>
     </div>
