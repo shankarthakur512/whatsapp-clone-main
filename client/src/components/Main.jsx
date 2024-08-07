@@ -89,6 +89,8 @@ useEffect(() => {
 		})
 	})
 }, [userInfo])
+
+
 useEffect(()=>{
 if(socket.current && !socketEvent){
   socket.current.on("msg-recieve" , (data) =>{
@@ -143,6 +145,8 @@ setSocketEvent(true)
 },[socket.current])
  useEffect(() =>{
   const getmessages = async () =>{
+    console.log(userInfo.id)
+    console.log(currentChatUser.id)
     const {data : {messages}} = await axios.get(`${GET_MESSAGE}/${userInfo.id}/${currentChatUser.id}`)
   
      dispatch({type : reducerCases.SET_MESSAGES , messages})
