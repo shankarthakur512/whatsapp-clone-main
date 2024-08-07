@@ -1,5 +1,5 @@
-// export const HOST = "https://whatsapp-clone-main-1.onrender.com"
-export const HOST = "http://localhost:4000"
+export const HOST = "https://whatsapp-clone-main-1.onrender.com"
+// export const HOST = "http://localhost:4000"
 const AUTH_ROUTE= `${HOST}/api/v1/user`
 const MESSAGE_ROUTE = `${HOST}/api/v1/messages`
 export const CHECK_USER = `${AUTH_ROUTE}/login`
