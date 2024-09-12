@@ -14,7 +14,7 @@ import SearchMessages from "./Chat/SearchMessages.jsx";
 import VoiceCall from "./Call/VoiceCall.jsx";
 import VideoCall from "./Call/VideoCall.jsx";
 import IncomingCall from "./common/IncomingCall.jsx";
-import IncomingVideocall from "./common/IncomingVideocall";
+import IncomingVideocall from "./common/IncomingVideocall.jsx";
 
 
 
