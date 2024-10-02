@@ -40,7 +40,7 @@ if(!userInfo && currentUser?.email){
 const {data} = await axios.post(CHECK_USER,{
 email : currentUser.email,
 })
-console.log(data)
+if(!data.success) router.push("/login");
 dispatch({
   type : reducerCases.SET_USER_INFO,
    userInfo : {
